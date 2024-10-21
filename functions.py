@@ -17,9 +17,11 @@ class Profile:
         self.orientation = orientation
         self.bio = bio
         self.images = images
-        self.blur = blur
-        self.interests = []
-
+        self.imageIndex = 0
+        # self.blur = blur
+        # self.blurIndexLess = 0
+        # self.blurIndexMore = 0
+        # self.interests = []
 
 def importProfileData(profiles):
     # Compile all profiles
@@ -43,15 +45,23 @@ def importProfileData(profiles):
             blur.append(picblur)
         profiles.append(Profile(profile[0], profile[1], profile[2], profile[3], profile[4], images, blur))
         i += 1
-        
-            
 
-
-
-def closeApp():
-    # save matrix and other data
+def getClick():
+    # return yes, no, or next image
     pass
+
+def closeApp(swipeMatrix):
+    # save matrix and other data
+    fp = open("saveData.csv", 'w')
+    for user in swipeMatrix:
+        for swipe in user:
+            fp.write(swipe + ',')
+        fp.write('\n')
+    fp.close()
 
 def loadApp(swipeMatrix):
     # reload matrix and other data
-    pass
+    fp = open("saveData.csv")
+    for line in fp:
+        swipeMatrix.append(line.split(','))
+    fp.close()
